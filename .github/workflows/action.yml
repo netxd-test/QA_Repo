@@ -1,10 +1,5 @@
 name: Auto Tag on Commit
 
-on:
-  push:
-    branches:
-      - QA
-
 jobs:
 
   build_no_release:
