@@ -8,7 +8,6 @@ runs:
       uses: actions/checkout@v4
       with:
         fetch-depth: '0'
-        token: ${{ secrets.BOT_TOKEN }}
     - name: Generate Git Tag
       shell: bash
 
@@ -42,8 +41,6 @@ runs:
         echo "Generated new tag: $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
     - name: Push Git Tag
-      env:
-        BOT_TOKEN: ${{ secrets.BOT_TOKEN2 }}
       shell: bash    
       run: |
         git config user.name "Abisheck2002"
