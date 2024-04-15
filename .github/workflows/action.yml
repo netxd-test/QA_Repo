@@ -43,7 +43,7 @@ runs:
     - name: Push Git Tag
       shell: bash    
       run: |
-        git config user.name "Abisheck26"
-        git config user.email "abisheckgnanavel@gmail.com"
+        git config user.name "Abisheck2002"
+        git config user.email "abisheck.g@netxd.com"
         git tag $NEW_TAG
         git push origin --tags >/dev/null 2>&1
