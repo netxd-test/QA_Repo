@@ -4,7 +4,6 @@ description: 'composite run action'
 runs:
   using: "composite"
     steps:
-   
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
