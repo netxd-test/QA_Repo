@@ -1,14 +1,8 @@
-name: Auto Tag on Commit
+name: Test
+description: 'composite run action'
 
-on:
-  push:
-    branches:
-      - QA
-
-jobs:
-
-  build:
-    runs-on: ubuntu-latest
+runs:
+  using: "composite"
     steps:
    
       - name: Checkout repository
