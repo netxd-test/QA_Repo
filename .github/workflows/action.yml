@@ -1,7 +1,6 @@
 
-name: Test
+name: Auto Tag on Commit
 description: 'composite run action'
-
 runs:
   using: "composite"
   steps:
