@@ -28,7 +28,7 @@ runs:
           BRANCH_NAME=$(echo "$LATEST_TAG" | cut -d'_' -f2)
 
           # Increment the version number
-          if [contains(github.event.head_commit.message, 'MINOR_RELEASE')]; then
+          if [${{contains(github.event.head_commit.message, 'MINOR_RELEASE')}}]; then
             NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 +1"." $2 "." $3}')
           else
             NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')
