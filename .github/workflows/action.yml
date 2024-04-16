@@ -5,10 +5,10 @@ runs:
   using: "composite"
   if: ${{ !contains(github.event.head_commit.message, 'MINOR_RELEASE') && !contains(github.event.head_commit.message, 'MAJOR_RELEASE') }}   
   steps:
-    - name: Generate minor Git Tag
+    - name: Generate Git Tag
       shell: bash
-      id: generate_minor_tag
-      if: contains(github.event.head_commit.message, 'MINOR_RELEASE')
+
+      id: generate_tag
       run: |
         # Find the latest tag if available
         LATEST_TAG=$(git describe --tags --abbrev=0 || echo "")
@@ -29,7 +29,10 @@ runs:
           BRANCH_NAME=$(echo "$LATEST_TAG" | cut -d'_' -f2)
 
           # Increment the version number
-          NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')
+          if [contains(github.event.head_commit.message, 'MINOR_RELEASE')]; then
+            NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 +1"." $2 "." $3}')
+          else
+            NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')
 
           # Construct the new tag
           NEW_TAG="v${NEW_VERSION}_$Branch_Name"
