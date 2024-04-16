@@ -30,6 +30,7 @@ runs:
           # Increment the version number
           if [[ "${{contains(github.event.head_commit.message, 'MINOR_RELEASE')}}" ]]; then
             NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 +1"." $2 "." $3}')
+            echo"message Name:$github.event.head_commit.message"
           else
             NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')
           fi
