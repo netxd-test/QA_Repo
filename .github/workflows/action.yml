@@ -3,7 +3,6 @@ name: Auto Tag on Commit
 description: 'composite run action'
 runs:
   using: "composite"
-  if: ${{ !contains(github.event.head_commit.message, 'MINOR_RELEASE') && !contains(github.event.head_commit.message, 'MAJOR_RELEASE') }}   
   steps:
     - name: Generate Git Tag
       shell: bash
