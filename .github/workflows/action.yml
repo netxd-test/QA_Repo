@@ -3,6 +3,7 @@ name: Auto Tag on Commit
 description: 'composite run action'
 runs:
   using: "composite"
+  if: ${{ !contains(github.event.head_commit.message, 'MINOR_RELEASE') && !contains(github.event.head_commit.message, 'MAJOR_RELEASE') }}   
   steps:
     - name: Generate Git Tag
       shell: bash
@@ -28,12 +29,8 @@ runs:
           BRANCH_NAME=$(echo "$LATEST_TAG" | cut -d'_' -f2)
 
           # Increment the version number
-          if [[ "${{contains(github.event.head_commit.message, 'MINOR_RELEASE')}}" ]]; then
-            NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 +1"." $2 "." $3}')
-            echo"message Name:$github.event.head_commit.message"
-          else
-            NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')
-          fi
+          NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')
+
           # Construct the new tag
           NEW_TAG="v${NEW_VERSION}_$Branch_Name"
         fi
