@@ -26,9 +26,9 @@ runs:
           VERSION_BRANCH=$(echo "$LATEST_TAG" | cut -d'_' -f1)
           VERSION=$(echo "$VERSION_BRANCH" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
           BRANCH_NAME=$(echo "$LATEST_TAG" | cut -d'_' -f2)
-          if["${{ github.event.head_commit.message }}" == 'MAJOR_RELEASE']; then
-            echo "hi"
-          fi  
+          if [ "${{ github.event.head_commit.message }}" == 'MAJOR_RELEASE' ]; then
+             echo "hi"
+          fi 
           # Increment the version number
           NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')
 
