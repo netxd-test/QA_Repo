@@ -1,4 +1,3 @@
-
 name: Auto Tag on Commit
 description: 'composite run action'
 runs:
@@ -14,11 +13,12 @@ runs:
         echo "Old tag: $LATEST_TAG"
 
         #Find Branch_Name
-
         Branch_Name="qa"
         echo "Branch Name:$Branch_Name"
 
+        #Find Latest Tag
         if [ -z "$LATEST_TAG" ]; then
+
           # If no tags found, start with initial version and branch name
           NEW_TAG="v0.0.0_$Branch_Name"
         else
@@ -27,7 +27,7 @@ runs:
           VERSION=$(echo "$VERSION_BRANCH" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
           BRANCH_NAME=$(echo "$LATEST_TAG" | cut -d'_' -f2)
 
-          # Increment the version number
+          # Increment the version number according to message
           if [ "${{ github.event.head_commit.message }}" == 'MAJOR_RELEASE' ]; then
             NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 +1 "." $2 ".0"}')
           elif [ "${{ github.event.head_commit.message }}" == 'MINOR_RELEASE' ]; then  
