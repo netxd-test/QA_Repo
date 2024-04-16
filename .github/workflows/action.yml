@@ -26,11 +26,15 @@ runs:
           VERSION_BRANCH=$(echo "$LATEST_TAG" | cut -d'_' -f1)
           VERSION=$(echo "$VERSION_BRANCH" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
           BRANCH_NAME=$(echo "$LATEST_TAG" | cut -d'_' -f2)
-          if [ "${{ github.event.head_commit.message }}" == 'hi' ]; then
-             echo "hi"
-          fi 
+
           # Increment the version number
-          NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')
+          if [ "${{ github.event.head_commit.message }}" == 'MAJOR_RELEASE' ]; then
+            NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 +1 "." $2 ".0"}')
+          elif [ "${{ github.event.head_commit.message }}" == 'MINOR_RELEASE' ]; then  
+            NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 + 1 ".0"}')
+          else
+            NEW_VERSION=$(echo "$VERSION" | awk -F'.' '{print $1 "." $2 "." $3 + 1}')  
+          fi 
 
           # Construct the new tag
           NEW_TAG="v${NEW_VERSION}_$Branch_Name"
